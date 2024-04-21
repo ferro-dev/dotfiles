@@ -59,3 +59,5 @@ Feels good.
 ## Configuration
 
 I keep a copy of my `.zshrc` in this directory, replace yours or steal whatever you want from it. We're done here.
+
+Of note: I had to fuck about with my git config after installing Starship. Might add details once I understand it more.
