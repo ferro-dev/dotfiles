@@ -16,7 +16,3 @@ brew install stow
 
 Because there is going to be potentially some configuration and script editing, the next thing to install is NeoVim.
 
-## TODO
-
-* [ ] add bootstrap script
-* [ ] add support for Linux and Windows
