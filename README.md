@@ -1,6 +1,6 @@
 # dotfiles
 
-⚙️ .files, such as .vimrc, for keeping tracking of my user specfic configuration.
+⚙️ .files, such as .zshrc, for keeping tracking of my user specfic configuration.
 
 ## Getting Started
 
