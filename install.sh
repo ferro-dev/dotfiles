@@ -27,11 +27,24 @@ ok()      { echo -e "${GREEN}[install]${NC} ✓ $1"; }
 
 info "Checking apt dependencies..."
 
-if ! command -v stow &>/dev/null; then
-    info "Installing stow and tmux via apt..."
-    sudo apt update -qq && sudo apt install -y stow tmux
+APT_PACKAGES=()
+command -v stow    &>/dev/null || APT_PACKAGES+=(stow)
+command -v tmux    &>/dev/null || APT_PACKAGES+=(tmux)
+command -v flatpak &>/dev/null || APT_PACKAGES+=(flatpak)
+
+if [[ ${#APT_PACKAGES[@]} -gt 0 ]]; then
+    info "Installing via apt: ${APT_PACKAGES[*]}..."
+    sudo apt update -qq && sudo apt install -y "${APT_PACKAGES[@]}"
 else
-    ok "stow and tmux already installed"
+    ok "apt dependencies already installed"
+fi
+
+info "Checking Flathub remote..."
+if ! flatpak remotes 2>/dev/null | grep -q flathub; then
+    info "Adding Flathub remote..."
+    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+else
+    ok "Flathub remote already configured"
 fi
 
 # =============================================================================
