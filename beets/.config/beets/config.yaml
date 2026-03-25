@@ -1,0 +1,44 @@
+directory: ${MUSIC_DIR}
+library: ${MUSIC_DIR}/data/musiclibrary.db
+
+import:
+    copy: yes
+    move: no
+    write: yes
+    timid: yes
+    log: ${MUSIC_DIR}/data/import.log
+
+paths:
+    default: "%the{$albumartist}/$album%aunique{}/%if{$multidisc,Disc $disc/}$track - $title"
+    singleton: "Non-Album/%the{$artist}/$title"
+    comp: "Compilations/$album%aunique{}/%if{$multidisc,Disc $disc/}$track - $title"
+
+match:
+    # Files tagged by Picard will have MBIDs — beets does direct lookup,
+    # so strong matches are the norm. Thresholds loosened as a safety net
+    # for any files Picard couldn't identify.
+    strong_rec_thresh: 0.10
+    medium_rec_thresh: 0.40
+    max_rec:
+        missing_tracks: medium
+        unmatched_tracks: medium
+
+asciify_paths: no
+
+# chroma removed — Picard handles fingerprinting/identification upstream.
+# beets no longer needs to re-fingerprint on import.
+plugins: fetchart embedart scrub
+
+fetchart:
+    auto: yes
+    minwidth: 500
+    maxwidth: 1200
+    sources: filesystem coverart itunes amazon albumart
+
+embedart:
+    auto: yes
+    maxwidth: 500
+    remove_art_file: no
+
+scrub:
+    auto: yes
