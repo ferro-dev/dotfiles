@@ -1,0 +1,64 @@
+% tmux, multiplexer
+
+; Prefix is C-a
+
+# New session
+tmux new -s <name>
+
+# Attach to session
+tmux attach -t <name>
+
+# List sessions
+tmux ls
+
+# Kill server
+tmux kill-server
+
+$ name: tmux ls --format '#{session_name}' --- --column 1
+
+% tmux, panes
+
+; prefix + h/j/k/l to navigate
+; prefix + H/J/K/L to resize
+; prefix + | to split vertical
+; prefix + - to split horizontal
+; prefix + z to zoom/unzoom
+; prefix + x to kill pane
+
+# Split pane vertically (current dir)
+tmux split-window -h -c "#{pane_current_path}"
+
+# Split pane horizontally (current dir)
+tmux split-window -v -c "#{pane_current_path}"
+
+% tmux, windows
+
+; prefix + c  new window
+; prefix + n  next window
+; prefix + p  previous window
+; prefix + a  last window
+; prefix + ,  rename window
+; prefix + &  kill window
+
+# New window in current dir
+tmux new-window -c "#{pane_current_path}"
+
+% tmux, sessions
+
+; prefix + f  sessionizer (fzf project picker)
+; prefix + d  detach
+; prefix + $  rename session
+; prefix + C-s  save (resurrect)
+; prefix + C-r  restore (resurrect)
+
+# Switch to session by name
+tmux switch-client -t <name>
+
+$ name: tmux ls --format '#{session_name}' --- --column 1
+
+% tmux, copy mode
+
+; prefix + Enter  enter copy mode
+; v  begin selection
+; y  yank and exit
+; q  quit copy mode

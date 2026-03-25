@@ -1,0 +1,88 @@
+% fzf
+
+; Ctrl+g   fzf-git keybindings
+; Ctrl+t   fuzzy find file and insert path
+; Ctrl+r   fuzzy search shell history
+; Alt+c    fuzzy cd into directory
+
+# Fuzzy find and open in nvim
+nvim $(fzf)
+
+# Fuzzy find with preview
+fzf --preview 'bat --color=always {}'
+
+% git
+
+# Pretty log
+git log --oneline --graph --decorate
+
+# Stage interactively
+git add -p
+
+# Undo last commit (keep changes)
+git reset --soft HEAD~1
+
+# Discard all local changes
+git restore .
+
+# Create and push branch
+git checkout -b <branch> && git push -u origin <branch>
+
+# Delete remote branch
+git push origin --delete <branch>
+
+$ branch: git branch --format '%(refname:short)'
+
+% gh (github cli)
+
+# List open PRs
+gh pr list
+
+# Check out a PR locally
+gh pr checkout <number>
+
+# View PR in browser
+gh pr view <number> --web
+
+# Create issue
+gh issue create --title "<title>" --label "<label>"
+
+# List issues
+gh issue list
+
+$ number: gh pr list --json number --jq '.[].number'
+
+% brew
+
+# Install package
+brew install <package>
+
+# Update all packages
+brew upgrade
+
+# Search for package
+brew search <query>
+
+# Show package info
+brew info <package>
+
+# List installed
+brew list
+
+% shell, utils
+
+# bat — better cat
+bat <file>
+
+# fd — better find
+fd <pattern>
+
+# delta — better git diff (automatic via .gitconfig)
+
+# thefuck — fix last command
+fuck
+
+# tldr — concise man pages
+tldr <command>
+
+$ command: tldr --list 2>/dev/null | fzf

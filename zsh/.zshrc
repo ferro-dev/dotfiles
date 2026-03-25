@@ -159,3 +159,8 @@ export NVM_DIR="$HOME/.nvm"
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)
+
+# ---- navi (interactive cheatsheets) ----
+
+export NAVI_PATH="$HOME/dotfiles/cheatsheets"
+eval "$(navi widget zsh)"
