@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+#
+# tmux-sessionizer
+# Fuzzy-search project directories and open them as named tmux sessions.
+# Bound to prefix + f in .tmux.conf.
+
+SEARCH_DIRS=(
+    "$HOME/git"
+    "$HOME/dotfiles"
+    "$HOME/learning"
+)
+
+# Build the list: top-level dirs inside each search dir, plus the search dirs
+# themselves if they are projects (have a .git at root)
+candidates=$(
+    find "${SEARCH_DIRS[@]}" -mindepth 1 -maxdepth 1 -type d 2>/dev/null
+    for dir in "${SEARCH_DIRS[@]}"; do
+        [[ -d "$dir/.git" ]] && echo "$dir"
+    done
+)
+
+selected=$(echo "$candidates" | sort -u | fzf --prompt="session: " --height=40% --reverse --border)
+
+[[ -z "$selected" ]] && exit 0
+
+# Derive a clean session name from the directory basename
+# (tmux doesn't allow dots in session names)
+session_name=$(basename "$selected" | tr '.' '_')
+
+if ! tmux has-session -t "$session_name" 2>/dev/null; then
+    # Create new detached session rooted at the selected directory
+    tmux new-session -ds "$session_name" -c "$selected"
+fi
+
+# Switch to the session (works both inside and outside tmux)
+if [[ -n "$TMUX" ]]; then
+    tmux switch-client -t "$session_name"
+else
+    tmux attach-session -t "$session_name"
+fi
