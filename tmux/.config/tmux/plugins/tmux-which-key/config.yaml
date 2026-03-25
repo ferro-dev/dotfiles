@@ -95,6 +95,20 @@ items:
         key: R
         command: run-shell "~/.tmux/plugins/tmux-resurrect/scripts/restore.sh"
 
+  # ---- Cheatsheets ----
+  - name: +Cheatsheets
+    key: "/"
+    menu:
+      - name: tmux
+        key: t
+        command: "display-popup -E \"less $HOME/dotfiles/cheatsheets/tmux.cheat\""
+      - name: nvim
+        key: n
+        command: "display-popup -E \"less $HOME/dotfiles/cheatsheets/nvim.cheat\""
+      - name: shell
+        key: e
+        command: "display-popup -E \"less $HOME/dotfiles/cheatsheets/shell.cheat\""
+
   # ---- Copy mode ----
   - name: Copy mode
     key: Enter
