@@ -1,7 +1,10 @@
 command_alias_start_index: 200
 
-# Triggered by prefix + ?
-prefix_table: "?"
+keybindings:
+  prefix_table: "?"
+
+custom_variables: []
+macros: []
 
 title:
   style: align=centre,bold
@@ -32,10 +35,10 @@ items:
       - separator: true
       - name: Split vertical
         key: "|"
-        command: "split-window -h -c '#{pane_current_path}'"
+        command: "split-window -h -c #{pane_current_path}"
       - name: Split horizontal
         key: "-"
-        command: "split-window -v -c '#{pane_current_path}'"
+        command: "split-window -v -c #{pane_current_path}"
       - separator: true
       - name: Zoom toggle
         key: z
@@ -50,7 +53,7 @@ items:
     menu:
       - name: New window
         key: c
-        command: "new-window -c '#{pane_current_path}'"
+        command: "new-window -c #{pane_current_path}"
       - name: Next window
         key: n
         command: next-window
@@ -74,7 +77,7 @@ items:
     menu:
       - name: Sessionizer
         key: f
-        command: "display-popup -E '$HOME/.local/bin/tmux-sessionizer'"
+        command: "display-popup -E $HOME/.local/bin/tmux-sessionizer"
       - name: Choose session
         key: s
         command: choose-tree -Zs
@@ -100,4 +103,4 @@ items:
   # ---- Config ----
   - name: Reload config
     key: r
-    command: "source-file $HOME/.tmux.conf ; display 'Config reloaded'"
+    command: "source-file $HOME/.tmux.conf"
