@@ -30,6 +30,7 @@ info "Checking apt dependencies..."
 APT_PACKAGES=()
 command -v stow    &>/dev/null || APT_PACKAGES+=(stow)
 command -v tmux    &>/dev/null || APT_PACKAGES+=(tmux)
+command -v zsh     &>/dev/null || APT_PACKAGES+=(zsh)
 command -v flatpak &>/dev/null || APT_PACKAGES+=(flatpak)
 
 if [[ ${#APT_PACKAGES[@]} -gt 0 ]]; then
@@ -42,7 +43,11 @@ fi
 info "Checking Flathub remote..."
 if ! flatpak remotes 2>/dev/null | grep -q flathub; then
     info "Adding Flathub remote..."
-    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    if flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo 2>/dev/null; then
+        ok "Flathub remote added"
+    else
+        warn "Could not add Flathub remote (D-Bus unavailable? Run manually: flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo)"
+    fi
 else
     ok "Flathub remote already configured"
 fi
@@ -66,8 +71,11 @@ fi
 # =============================================================================
 
 info "Installing brew packages from Brewfile..."
-brew bundle install --file="$DOTFILES/Brewfile" --no-lock
-ok "Brew packages installed"
+if brew bundle install --file="$DOTFILES/Brewfile"; then
+    ok "Brew packages installed"
+else
+    warn "Some packages failed (flatpak apps require Flathub to be configured first)"
+fi
 
 # =============================================================================
 # 4. oh-my-zsh
