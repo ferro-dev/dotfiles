@@ -12,15 +12,14 @@ SEARCH_DIRS=(
 
 # Build the list: top-level dirs inside each search dir, plus the search dirs
 # themselves if they are projects (have a .git at root)
-selected=$(
+candidates=$(
     find "${SEARCH_DIRS[@]}" -mindepth 1 -maxdepth 1 -type d 2>/dev/null
-    # Include the search dirs themselves if they are git repos
     for dir in "${SEARCH_DIRS[@]}"; do
         [[ -d "$dir/.git" ]] && echo "$dir"
     done
-    | sort -u \
-    | fzf --prompt="session: " --height=40% --reverse --border
 )
+
+selected=$(echo "$candidates" | sort -u | fzf --prompt="session: " --height=40% --reverse --border)
 
 [[ -z "$selected" ]] && exit 0
 
