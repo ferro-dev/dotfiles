@@ -86,6 +86,8 @@ info "Checking oh-my-zsh..."
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
     info "Installing oh-my-zsh..."
     RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    # Remove the generated .zshrc so stow can link ours
+    [[ -f "$HOME/.zshrc" && ! -L "$HOME/.zshrc" ]] && rm "$HOME/.zshrc"
 else
     ok "oh-my-zsh already installed"
 fi
