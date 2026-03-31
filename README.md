@@ -50,7 +50,7 @@ stow -D zsh                  # remove links for a package
 | Package | Stow target | Contents |
 |---------|-------------|----------|
 | `zsh` | `~/.zshrc`, `~/.p10k.zsh` | oh-my-zsh config, powerlevel10k theme, fzf+fd integration, bat, thefuck, nvm, navi, Angular CLI |
-| `tmux` | `~/.tmux.conf`, `~/.config/tmux/` | prefix `C-a`, Catppuccin Macchiato theme, TPM plugins, tmux-which-key config |
+| `tmux` | `~/.tmux.conf`, `~/.config/tmux/` | prefix `C-b`, Catppuccin Macchiato theme, TPM plugins, tmux-which-key config |
 | `nvim` | `~/.config/nvim/` | Lazy.nvim, LSP (mason + mason-lspconfig), Telescope, Treesitter, which-key, lualine, neo-tree, Catppuccin theme, render-markdown, Roslyn (C#) |
 | `git` | `~/.gitconfig` | delta pager, aliases |
 | `beets` | `~/.config/beets/config.yaml` | music library manager config; requires `MUSIC_DIR` env var |
@@ -86,7 +86,7 @@ Plugins managed by [TPM](https://github.com/tmux-plugins/tpm) at `~/.tmux/plugin
 
 ```
 tmux new -s main
-# press: C-a I   (prefix + I to install plugins)
+# press: C-b I   (prefix + I to install plugins)
 ```
 
 ## Post-install steps
@@ -95,7 +95,7 @@ These are noted at the end of `install.sh` output:
 
 1. **Log out and back in** (or open a new terminal) — `install.sh` sets zsh as your default login shell via `chsh`, which takes effect on next login.
 
-2. **Install tmux plugins** — open tmux, press `C-a I`.
+2. **Install tmux plugins** — open tmux, press `C-b I`.
 
 3. **Sync Neovim plugins** — open nvim and run `:Lazy sync`.
 
