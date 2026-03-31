@@ -178,12 +178,39 @@ info "Stowing packages..."
 cd "$DOTFILES"
 
 for pkg in zsh tmux git nvim beets bin; do
+    # First attempt: clean stow
     if stow --no-folding "$pkg" 2>/dev/null; then
         ok "stowed $pkg"
+        continue
+    fi
+
+    # Second attempt: adopt pre-existing files then restore dotfiles versions.
+    # This handles machines where real (non-symlinked) config files already exist
+    # at the target paths (e.g. a previously hand-configured machine).
+    if stow --adopt --no-folding "$pkg" 2>/dev/null; then
+        git -C "$DOTFILES" restore "$pkg"
+        ok "stowed $pkg (overwrote pre-existing config)"
     else
         warn "$pkg has conflicts — run 'stow --no-folding $pkg' manually to resolve"
     fi
 done
+
+# =============================================================================
+# 11. Set default shell to zsh
+# =============================================================================
+
+info "Checking default shell..."
+
+ZSH_PATH="$(command -v zsh)"
+CURRENT_LOGIN_SHELL="$(getent passwd "$USER" | cut -d: -f7)"
+if [[ "$CURRENT_LOGIN_SHELL" == "$ZSH_PATH" ]]; then
+    ok "Default shell is already zsh"
+elif grep -qF "$ZSH_PATH" /etc/shells; then
+    chsh -s "$ZSH_PATH"
+    ok "Default shell changed to zsh (takes effect on next login)"
+else
+    warn "zsh not found in /etc/shells — run manually: chsh -s $ZSH_PATH"
+fi
 
 # =============================================================================
 # Post-install notes
@@ -200,16 +227,12 @@ echo "  1. Set your music directory (required for beets):"
 echo "       export MUSIC_DIR=/path/to/your/music"
 echo "     Add this to ~/.zshrc.local or your environment."
 echo ""
-echo "  2. Start a new shell to load zsh config:"
-echo "       zsh"
+echo "  2. Log out and back in (or open a new terminal) to get zsh as your shell."
 echo ""
-echo "  3. Configure the prompt (first time only):"
-echo "       p10k configure"
-echo ""
-echo "  4. Open tmux and install plugins:"
+echo "  3. Open tmux and install plugins:"
 echo "       tmux new -s main"
 echo "       # then press: prefix + I  (C-a I)"
 echo ""
-echo "  5. Open nvim and sync plugins:"
+echo "  4. Open nvim and sync plugins:"
 echo "       nvim  →  :Lazy sync"
 echo ""
