@@ -170,7 +170,27 @@ else
 fi
 
 # =============================================================================
-# 10. Stow all packages
+# 10. COSMIC theme (Catppuccin Macchiato)
+# =============================================================================
+
+info "Checking COSMIC theme..."
+
+if command -v cosmic-settings &>/dev/null; then
+    COSMIC_THEME_DIR="$HOME/.config/cosmic"
+    mkdir -p "$COSMIC_THEME_DIR"
+
+    info "Copying COSMIC Catppuccin theme files..."
+    info "Import the desktop theme via: COSMIC Settings > Desktop > Appearance > Import"
+    info "  File: $DOTFILES/cosmic/catppuccin-macchiato-mauve+round.ron"
+    info "Import the terminal theme via: COSMIC Terminal > View > Color schemes > Import"
+    info "  File: $DOTFILES/cosmic/catppuccin-macchiato.ron"
+    ok "COSMIC theme files available"
+else
+    warn "COSMIC not found — skipping theme setup"
+fi
+
+# =============================================================================
+# 11. Stow all packages
 # =============================================================================
 
 info "Stowing packages..."
@@ -208,8 +228,14 @@ echo "       p10k configure"
 echo ""
 echo "  4. Open tmux and install plugins:"
 echo "       tmux new -s main"
-echo "       # then press: prefix + I  (C-a I)"
+echo "       # then press: prefix + I  (C-b I)"
 echo ""
 echo "  5. Open nvim and sync plugins:"
 echo "       nvim  →  :Lazy sync"
+echo ""
+echo "  6. Import COSMIC Catppuccin theme (if on COSMIC desktop):"
+echo "       COSMIC Settings > Desktop > Appearance > Import"
+echo "         → ~/dotfiles/cosmic/catppuccin-macchiato-mauve+round.ron"
+echo "       COSMIC Terminal > View > Color schemes > Import"
+echo "         → ~/dotfiles/cosmic/catppuccin-macchiato.ron"
 echo ""
