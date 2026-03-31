@@ -78,7 +78,40 @@ else
 fi
 
 # =============================================================================
-# 4. oh-my-zsh
+# 4. tree-sitter CLI
+# =============================================================================
+#
+# The brew 'tree-sitter' formula installs only the C library, not the CLI
+# binary. nvim-treesitter (main branch) requires the CLI >= 0.26.1 to build
+# parsers. Install the prebuilt binary to ~/.local/bin directly.
+
+info "Checking tree-sitter CLI..."
+
+TREE_SITTER_VERSION="0.26.7"
+TREE_SITTER_BIN="$HOME/.local/bin/tree-sitter"
+
+_install_tree_sitter() {
+    mkdir -p "$HOME/.local/bin"
+    curl -fsSL "https://github.com/tree-sitter/tree-sitter/releases/download/v${TREE_SITTER_VERSION}/tree-sitter-linux-x64.gz" \
+        | gunzip > "$TREE_SITTER_BIN"
+    chmod +x "$TREE_SITTER_BIN"
+    ok "tree-sitter CLI ${TREE_SITTER_VERSION} installed"
+}
+
+if command -v tree-sitter &>/dev/null; then
+    TS_MINOR="$(tree-sitter --version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | cut -d. -f2)"
+    if [[ "${TS_MINOR:-0}" -ge 26 ]]; then
+        ok "tree-sitter CLI already installed ($(tree-sitter --version 2>/dev/null))"
+    else
+        info "tree-sitter CLI too old, upgrading to ${TREE_SITTER_VERSION}..."
+        _install_tree_sitter
+    fi
+else
+    _install_tree_sitter
+fi
+
+# =============================================================================
+# 5. oh-my-zsh
 # =============================================================================
 
 info "Checking oh-my-zsh..."
@@ -93,7 +126,7 @@ else
 fi
 
 # =============================================================================
-# 5. Powerlevel10k theme
+# 6. Powerlevel10k theme
 # =============================================================================
 
 info "Checking powerlevel10k..."
@@ -107,7 +140,7 @@ else
 fi
 
 # =============================================================================
-# 6. zsh plugins
+# 7. zsh plugins
 # =============================================================================
 
 info "Checking zsh plugins..."
@@ -131,7 +164,7 @@ else
 fi
 
 # =============================================================================
-# 7. fzf-git.sh
+# 8. fzf-git.sh
 # =============================================================================
 
 info "Checking fzf-git.sh..."
@@ -144,7 +177,7 @@ else
 fi
 
 # =============================================================================
-# 8. TPM (tmux plugin manager)
+# 9. TPM (tmux plugin manager)
 # =============================================================================
 
 info "Checking TPM..."
@@ -157,7 +190,7 @@ else
 fi
 
 # =============================================================================
-# 9. nvm
+# 10. nvm
 # =============================================================================
 
 info "Checking nvm..."
@@ -170,7 +203,7 @@ else
 fi
 
 # =============================================================================
-# 10. COSMIC theme (Catppuccin Macchiato)
+# 11. COSMIC theme (Catppuccin Macchiato)
 # =============================================================================
 
 info "Checking COSMIC theme..."
@@ -190,7 +223,7 @@ else
 fi
 
 # =============================================================================
-# 11. Stow all packages
+# 12. Stow all packages
 # =============================================================================
 
 info "Stowing packages..."
@@ -216,7 +249,7 @@ for pkg in zsh tmux git nvim beets bin; do
 done
 
 # =============================================================================
-# 11. Set default shell to zsh
+# 13. Set default shell to zsh
 # =============================================================================
 
 info "Checking default shell..."
@@ -251,12 +284,12 @@ echo "  2. Log out and back in (or open a new terminal) to get zsh as your shell
 echo ""
 echo "  3. Open tmux and install plugins:"
 echo "       tmux new -s main"
-echo "       # then press: prefix + I  (C-b I)"
+echo "       # then press: prefix + I  (C-a I)"
 echo ""
 echo "  4. Open nvim and sync plugins:"
 echo "       nvim  →  :Lazy sync"
 echo ""
-echo "  6. Import COSMIC Catppuccin theme (if on COSMIC desktop):"
+echo "  5. Import COSMIC Catppuccin theme (if on COSMIC desktop):"
 echo "       COSMIC Settings > Desktop > Appearance > Import"
 echo "         → ~/dotfiles/cosmic/catppuccin-macchiato-mauve+round.ron"
 echo "       COSMIC Terminal > View > Color schemes > Import"
