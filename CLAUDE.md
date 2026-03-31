@@ -44,10 +44,6 @@ Tmux plugins managed via TPM at `~/.tmux/plugins/tpm`. Install with `prefix + I`
 
 Neovim plugins managed via Lazy.nvim. Sync with `:Lazy sync` inside nvim.
 
-## Style
-
-- Do not add AI attribution comments or generation notices to any files (no "Generated with Claude Code", "Co-authored by", etc.)
-
 ## Testing install.sh
 
 Use `Dockerfile.test` to validate on a clean Ubuntu 22.04 system:

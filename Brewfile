@@ -18,6 +18,7 @@ brew "tldr"          # concise man pages
 
 # ---- Build tooling ----
 brew "pipx"          # isolated python CLI tool installs
+brew "tree-sitter"   # parser generator, required by nvim-treesitter main branch
 
 # ---- Flatpaks ----
 # GUI apps tracked here for full machine reproducibility.
