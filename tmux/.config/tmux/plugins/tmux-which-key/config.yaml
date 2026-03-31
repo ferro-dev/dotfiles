@@ -1,0 +1,120 @@
+command_alias_start_index: 200
+
+keybindings:
+  prefix_table: "?"
+
+custom_variables: []
+macros: []
+
+title:
+  style: align=centre,bold
+  prefix: "prefix +"
+  prefix_style: "fg=colour5,align=centre,bold"
+
+position:
+  x: C
+  y: C
+
+items:
+  # ---- Panes ----
+  - name: +Panes
+    key: p
+    menu:
+      - name: Navigate left
+        key: h
+        command: select-pane -L
+      - name: Navigate down
+        key: j
+        command: select-pane -D
+      - name: Navigate up
+        key: k
+        command: select-pane -U
+      - name: Navigate right
+        key: l
+        command: select-pane -R
+      - separator: true
+      - name: Split vertical
+        key: "|"
+        command: "split-window -h -c #{pane_current_path}"
+      - name: Split horizontal
+        key: "-"
+        command: "split-window -v -c #{pane_current_path}"
+      - separator: true
+      - name: Zoom toggle
+        key: z
+        command: resize-pane -Z
+      - name: Kill pane
+        key: x
+        command: kill-pane
+
+  # ---- Windows ----
+  - name: +Windows
+    key: w
+    menu:
+      - name: New window
+        key: c
+        command: "new-window -c #{pane_current_path}"
+      - name: Next window
+        key: n
+        command: next-window
+      - name: Previous window
+        key: p
+        command: previous-window
+      - name: Last window
+        key: a
+        command: last-window
+      - separator: true
+      - name: Rename window
+        key: ","
+        command: command-prompt -I "#W" "rename-window '%%'"
+      - name: Kill window
+        key: "&"
+        command: kill-window
+
+  # ---- Sessions ----
+  - name: +Sessions
+    key: s
+    menu:
+      - name: Sessionizer
+        key: f
+        command: "display-popup -E $HOME/.local/bin/tmux-sessionizer"
+      - name: Choose session
+        key: s
+        command: choose-tree -Zs
+      - name: Rename session
+        key: "$"
+        command: command-prompt -I "#S" "rename-session '%%'"
+      - name: Detach
+        key: d
+        command: detach-client
+      - separator: true
+      - name: Save (resurrect)
+        key: "S"
+        command: run-shell "~/.tmux/plugins/tmux-resurrect/scripts/save.sh"
+      - name: Restore (resurrect)
+        key: R
+        command: run-shell "~/.tmux/plugins/tmux-resurrect/scripts/restore.sh"
+
+  # ---- Cheatsheets ----
+  - name: +Cheatsheets
+    key: "/"
+    menu:
+      - name: tmux
+        key: t
+        command: "display-popup -E \"less $HOME/dotfiles/cheatsheets/tmux.cheat\""
+      - name: nvim
+        key: n
+        command: "display-popup -E \"less $HOME/dotfiles/cheatsheets/nvim.cheat\""
+      - name: shell
+        key: e
+        command: "display-popup -E \"less $HOME/dotfiles/cheatsheets/shell.cheat\""
+
+  # ---- Copy mode ----
+  - name: Copy mode
+    key: Enter
+    command: copy-mode
+
+  # ---- Config ----
+  - name: Reload config
+    key: r
+    command: "source-file $HOME/.tmux.conf"

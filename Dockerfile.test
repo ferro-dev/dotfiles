@@ -1,0 +1,21 @@
+FROM ubuntu:22.04
+
+# Avoid interactive prompts during apt installs
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Base deps: sudo, git, curl, fuse (required for flatpak)
+RUN apt-get update -qq && apt-get install -y \
+    sudo git curl fuse \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user with passwordless sudo (mirrors a real workstation)
+RUN useradd -m -s /bin/bash evan \
+    && echo "evan ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+USER evan
+WORKDIR /home/evan
+
+# Clone the dotfiles repo (uses the current branch via a local bind mount at runtime,
+# or replace with the real remote URL for a clean test)
+# docker run --privileged -v $(pwd):/home/evan/dotfiles evan-dotfiles-test
+CMD ["bash", "-c", "cd /home/evan/dotfiles && bash install.sh"]

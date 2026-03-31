@@ -1,0 +1,77 @@
+% nvim, modes
+
+; i      insert mode
+; Esc    normal mode
+; v      visual mode
+; V      visual line mode
+; :      command mode
+
+% nvim, navigation
+
+; h/j/k/l   left/down/up/right
+; w/b        next/prev word
+; gg/G       top/bottom of file
+; {/}        prev/next paragraph
+; Ctrl+d/u   half page down/up
+; zz         centre cursor on screen
+
+% nvim, editing
+
+; dd    delete line
+; yy    yank line
+; p     paste after
+; u     undo
+; C-r   redo
+; .     repeat last action
+; ciw   change inner word
+; di"   delete inside quotes
+
+% nvim, search
+
+; /pattern   search forward
+; n/N        next/prev match
+; *          search word under cursor
+; :%s/old/new/g  replace all
+
+% nvim, files
+
+; :w    save
+; :q    quit
+; :wq   save and quit
+; :q!   quit without saving
+
+% nvim, lsp
+
+; K        hover docs
+; gd       go to definition
+; <leader>ca  code action
+
+% nvim, telescope
+
+; Ctrl+p      find files
+; <leader>fg  live grep
+
+% nvim, neo-tree
+
+; Ctrl+n   toggle file tree
+
+% nvim, lazy
+
+# Sync plugins
+:Lazy sync
+
+# Update plugins
+:Lazy update
+
+# Check plugin status
+:Lazy
+
+% nvim, mason
+
+# Open Mason installer
+:Mason
+
+# Install LSP server
+:MasonInstall <server>
+
+$ server: echo -e "lua_ls\nts_ls\nangularls\nomnisharp"
