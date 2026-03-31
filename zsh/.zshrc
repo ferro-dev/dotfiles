@@ -172,3 +172,6 @@ source <(ng completion script)
 
 export NAVI_PATH="$HOME/dotfiles/cheatsheets"
 eval "$(navi widget zsh)"
+
+# Machine-local overrides (not committed to repo)
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
