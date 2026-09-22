@@ -34,6 +34,7 @@ cd ~/dotfiles && bash install.sh
 | fzf-git.sh | fzf-powered git keybindings (`~/fzf-git.sh/`) |
 | TPM | tmux plugin manager (`~/.tmux/plugins/tpm`) |
 | nvm | Node version manager |
+| COSMIC density | sets Compact interface density and header size (`~/.config/cosmic/com.system76.CosmicTk/v1/`) — COSMIC desktop only |
 | stow | symlinks all packages into `$HOME` |
 | chsh | sets zsh as the default login shell |
 
@@ -102,6 +103,7 @@ These are noted at the end of `install.sh` output:
 4. **Import COSMIC theme** (if on the COSMIC desktop):
    - Desktop: `COSMIC Settings > Desktop > Appearance > Import` → `~/dotfiles/cosmic/catppuccin-macchiato-mauve+round.ron`
    - Terminal: `COSMIC Terminal > View > Color schemes > Import` → `~/dotfiles/cosmic/catppuccin-macchiato.ron`
+   - Interface density is not part of the theme export — `install.sh` sets it to Compact directly, so no import step is needed for it.
 
 ## Testing install.sh on a clean system
 

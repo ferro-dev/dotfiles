@@ -218,6 +218,20 @@ if command -v cosmic-settings &>/dev/null; then
     info "Import the terminal theme via: COSMIC Terminal > View > Color schemes > Import"
     info "  File: $DOTFILES/cosmic/catppuccin-macchiato.ron"
     ok "COSMIC theme files available"
+
+    # Interface density is a toolkit setting, not part of the theme export,
+    # so it has to be written directly. COSMIC apps pick up the change live.
+    COSMIC_TK_DIR="$COSMIC_THEME_DIR/com.system76.CosmicTk/v1"
+    mkdir -p "$COSMIC_TK_DIR"
+
+    for key in interface_density header_size; do
+        if [[ "$(cat "$COSMIC_TK_DIR/$key" 2>/dev/null)" == "Compact" ]]; then
+            ok "COSMIC $key already Compact"
+        else
+            printf 'Compact' > "$COSMIC_TK_DIR/$key"
+            ok "COSMIC $key set to Compact"
+        fi
+    done
 else
     warn "COSMIC not found — skipping theme setup"
 fi
