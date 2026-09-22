@@ -93,11 +93,8 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+export EDITOR='nvim'
+export VISUAL='nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -172,6 +169,14 @@ source <(ng completion script)
 
 export NAVI_PATH="$HOME/dotfiles/cheatsheets"
 eval "$(navi widget zsh)"
+
+alias clip='wl-copy'
+alias vim='nvim'
+alias vi='nvim'
+
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 # Machine-local overrides (not committed to repo)
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

@@ -97,7 +97,7 @@ These are noted at the end of `install.sh` output:
 
 2. **Install tmux plugins** — open tmux, press `C-b I`.
 
-3. **Sync Neovim plugins** — open nvim and run `:Lazy sync`.
+3. **Sync Neovim plugins** — open nvim and run `:Lazy sync`. Then run `:MasonInstall roslyn` for the C# language server; it comes from the Crashdummyy Mason registry, so mason-lspconfig's `ensure_installed` can't install it.
 
 4. **Import COSMIC theme** (if on the COSMIC desktop):
    - Desktop: `COSMIC Settings > Desktop > Appearance > Import` → `~/dotfiles/cosmic/catppuccin-macchiato-mauve+round.ron`
